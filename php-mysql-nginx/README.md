@@ -1,0 +1,2 @@
+- `vagrant up`
+- `open http://localhost:8931/`

@@ -1,0 +1,37 @@
+Vagrant.configure("2") do |config|
+
+  # Specify the base box
+  config.vm.box = "primalskill/ubuntu-trusty64"
+
+  # Setup port forwarding
+    # auto_correct will try to fix port access issues
+    # this happens when there are multiple VMs running
+  config.vm.network :forwarded_port, guest: 80, host: 8931, auto_correct: true
+
+  # Setup synced folder
+    # create option will create the folder /var/www if it doesn't exist
+    # create a group and assign it as the owner of the /var/www directory
+  config.vm.synced_folder "./", "/var/www", create: true, group: "www-data", owner: "www-data"
+
+  # VM specific configs
+    # Vagrant uses VBoxManage to manage VM settings before booting up the VM
+    # https://www.virtualbox.org/manual/ch08.html#vboxmanage-modifyvm
+    # :id is the virtual machine’s ID,
+    # which needs to be passed to VBoxManage everytime we want to modify something VM specific
+    # Vagrant handles this for us, so we just need to pass this variable
+
+    # UPDATE:
+    # Couldn't install "Oracle VM VirtualBox Extension Pack" which was needed
+    # (apparently) to fix an issue with USB 2.0?
+    # The other solution was to disable USB (see --usb and --usbehci settings)
+  config.vm.provider "virtualbox" do |v|
+    v.name = "SitePoint Test Vagrant"
+    v.customize ["modifyvm", :id, "--memory", "1024", "--usb", "on", "--usbehci", "off"]
+  end
+
+  # Shell provisioning
+  config.vm.provision "shell" do |s|
+    s.path = "provision/setup.sh"
+  end
+
+end
