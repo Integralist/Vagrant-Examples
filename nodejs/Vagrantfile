@@ -7,6 +7,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.network :forwarded_port, guest: 80, host: 3000, auto_correct: true
+
+  # We use Vagrant to create the new "web" group/owner for us
+  # But we could have done this manually as part of our provisioning script
+  #
+  # useradd -mrU web
+  # chown web /var/www
+  # chgrp web /var/www
+  # cd /var/www/
+  # su web
+  # git clone {code}
   config.vm.synced_folder "./", "/var/www", create: true, group: "web", owner: "web"
 
   config.vm.provision "shell" do |s|

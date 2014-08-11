@@ -1,5 +1,3 @@
-# http://modernweb.com/2014/06/23/using-node-js-in-production/
-
 cat << EOF > /etc/systemd/system/our-node-app.service
   [Service]
   WorkingDirectory=/var/www
