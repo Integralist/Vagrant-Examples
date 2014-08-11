@@ -6,6 +6,9 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
 
+  # Working arround the "stdin: is not a tty" error, which appears when provisioning
+  # config.ssh.pty = true
+
   config.vm.network :forwarded_port, guest: 80, host: 3000, auto_correct: true
 
   # We use Vagrant to create the new "web" group/owner for us

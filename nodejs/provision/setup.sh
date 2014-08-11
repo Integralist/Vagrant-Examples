@@ -1,4 +1,6 @@
-mkdir /var/www
+su root
+
+mkdir -p /var/www
 
 cat << EOF > /etc/systemd/system/our-node-app.service
   [Service]
@@ -17,10 +19,14 @@ cat << EOF > /etc/systemd/system/our-node-app.service
   WantedBy=multi-user.target
 EOF
 
-systemctl enable our-node-app
-systemctl start our-node-app
-systemctl status our-node-app
-journalctl -u node-sample # logs
+# service our-node-app start
+# service --status-all | grep 'node'
+# initctl list
+
+# systemctl enable our-node-app
+# systemctl start our-node-app
+# systemctl status our-node-app
+# journalctl -u node-sample # logs
 
 # The following line carries out a zero-downtime restart
 # See ExecReload in above service config
