@@ -1,3 +1,5 @@
+mkdir /var/www
+
 cat << EOF > /etc/systemd/system/our-node-app.service
   [Service]
   WorkingDirectory=/var/www
@@ -26,6 +28,3 @@ journalctl -u node-sample # logs
 
 # Try killing the Node process by its pid and see if it starts back up!
 # e.g. kill -hup {pid}
-
-cd "/var/www"
-nodejs boot.js
