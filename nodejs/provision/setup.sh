@@ -2,7 +2,7 @@ su root
 
 mkdir -p /var/www
 
-cat << EOF > /etc/systemd/system/our-node-app.service
+cat << 'EOF' > /etc/systemd/system/our-node-app.service
   [Service]
   WorkingDirectory=/var/www
   ExecStart=/usr/bin/nodejs boot.js
