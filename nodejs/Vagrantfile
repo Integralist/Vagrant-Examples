@@ -4,7 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "arch"
 
   # Working arround the "stdin: is not a tty" error, which appears when provisioning
   # config.ssh.pty = true
@@ -21,6 +21,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # su web
   # git clone {code}
   config.vm.synced_folder "./", "/var/www", create: true, group: "web", owner: "web"
+
+  # Fix issue with USB 2.0 error
+  # See --usb and --usbehci settings
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["modifyvm", :id, "--memory", "1024", "--usb", "on", "--usbehci", "off"]
+  end
 
   config.vm.provision "shell" do |s|
     s.path = "provision/setup.sh"
